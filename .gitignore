@@ -82,3 +82,4 @@ venv/
 uploads/
 __pycache__/
 *.pyc
+.env.example
