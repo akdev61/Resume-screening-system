@@ -25,5 +25,4 @@ Run with Docker
 docker-compose up --build
 ```
 
-Open http://localhost:8000 — API docs at http://localhost:8000/docs
 
