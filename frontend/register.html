@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Create account · RecruitAI</title>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      RecruitAI
+    </div>
+    <h1 class="auth-heading">Create your account</h1>
+    <p class="auth-sub">Start screening resumes in minutes</p>
+    <div id="err" class="auth-error"></div>
+    <div class="form-stack">
+      <div class="field-row">
+        <div class="field">
+          <label class="field-label">First name</label>
+          <input id="first_name" type="text" placeholder="Anish" />
+        </div>
+        <div class="field">
+          <label class="field-label">Last name</label>
+          <input id="last_name" type="text" placeholder="Karmacharya" />
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label">Email address</label>
+        <input id="email" type="email" placeholder="you@company.com" />
+      </div>
+      <div class="field">
+        <label class="field-label">Password <span class="text-muted">(min. 6 characters)</span></label>
+        <input id="password" type="password" placeholder="••••••••" />
+      </div>
+      <button class="btn btn-primary w-full" id="reg-btn" onclick="doRegister()">Create account</button>
+    </div>
+    <div class="auth-link-row">Already have an account? <a href="/">Sign in</a></div>
+  </div>
+</div>
+<div id="toast"></div>
+<script src="/static/app.js"></script>
+<script>
+requireGuest();
+
+async function doRegister() {
+  const payload = {
+    first_name: document.getElementById('first_name').value.trim(),
+    last_name: document.getElementById('last_name').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    password: document.getElementById('password').value,
+  };
+  const err = document.getElementById('err');
+  const btn = document.getElementById('reg-btn');
+  err.className = 'auth-error';
+
+  if (!payload.first_name || !payload.last_name || !payload.email || !payload.password) {
+    showErr('All fields are required.'); return;
+  }
+  if (payload.password.length < 6) { showErr('Password must be at least 6 characters.'); return; }
+
+  btn.innerHTML = '<span class="spinner"></span> Creating account…';
+  btn.disabled = true;
+
+  try {
+    await http.post('/auth/register', payload);
+    toast('Account created! Signing you in…');
+    const form = new FormData();
+    form.append('username', payload.email);
+    form.append('password', payload.password);
+    const data = await http.postForm('/auth/login', form);
+    setToken(data.access_token);
+    const me = await http.get('/auth/me');
+    setUser(me);
+    window.location.href = '/dashboard';
+  } catch (e) {
+    showErr(e.message);
+    btn.innerHTML = 'Create account';
+    btn.disabled = false;
+  }
+}
+
+function showErr(msg) {
+  const err = document.getElementById('err');
+  err.textContent = msg;
+  err.className = 'auth-error show';
+}
+</script>
+</body>
+</html>

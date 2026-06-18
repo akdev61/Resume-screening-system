@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: resume_screening
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/resume_screening
+    depends_on:
+      - db
+    volumes:
+      - ./:/app:cached
+      - ./uploads:/app/uploads
+
+volumes:
+  db_data:

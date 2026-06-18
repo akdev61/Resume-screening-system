@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Settings · RecruitAI</title>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="/dashboard" class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      RecruitAI
+    </a>
+    <nav class="sidebar-section">
+      <a href="/dashboard" class="nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="/jobs-page" class="nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+        Jobs
+      </a>
+      <a href="/settings-page" class="nav-link active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-chip" onclick="logout()">
+        <div class="user-avatar-sm" id="sidebar-user-avatar">AK</div>
+        <div>
+          <div class="user-name" id="sidebar-user-name">Loading…</div>
+          <div class="user-email" id="sidebar-user-email"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left"><span class="page-title">Settings</span></div>
+    </header>
+
+    <div class="page-body">
+      <div class="settings-stack">
+
+        <!-- Profile -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Profile</div>
+              <div class="card-sub">Update your name and email address</div>
+            </div>
+            <!-- Avatar preview -->
+            <div class="user-avatar-sm" id="profile-avatar" style="width:44px;height:44px;font-size:14px;background:var(--blue);color:#fff;"></div>
+          </div>
+          <div class="card-body">
+            <div class="form-stack">
+              <div class="field-row">
+                <div class="field">
+                  <label class="field-label">First name</label>
+                  <input type="text" id="first_name" />
+                </div>
+                <div class="field">
+                  <label class="field-label">Last name</label>
+                  <input type="text" id="last_name" />
+                </div>
+              </div>
+              <div class="field">
+                <label class="field-label">Email address</label>
+                <input type="email" id="email" />
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-primary" id="profile-btn" onclick="saveProfile()">Save changes</button>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Change password</div>
+              <div class="card-sub">Leave blank to keep your current password</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-stack">
+              <div class="field-row">
+                <div class="field">
+                  <label class="field-label">New password</label>
+                  <input type="password" id="new-password" placeholder="Min. 6 characters" />
+                </div>
+                <div class="field">
+                  <label class="field-label">Confirm new password</label>
+                  <input type="password" id="confirm-password" placeholder="Repeat password" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-primary" id="pw-btn" onclick="savePassword()">Update password</button>
+          </div>
+        </div>
+
+        <!-- Danger zone -->
+        <div class="danger-card">
+          <div class="danger-card-header">Danger zone</div>
+          <div class="danger-row">
+            <div>
+              <div class="danger-text">Sign out of all sessions</div>
+              <div class="danger-sub">Clears your local session. You'll need to sign in again.</div>
+            </div>
+            <button class="btn btn-danger-outline" onclick="logout()">Sign out</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script src="/static/app.js"></script>
+<script>
+requireAuth();
+renderUserChip();
+
+async function loadProfile() {
+  try {
+    const u = await http.get('/auth/me');
+    setUser(u);
+    document.getElementById('first_name').value = u.first_name;
+    document.getElementById('last_name').value = u.last_name;
+    document.getElementById('email').value = u.email;
+    const initials = (u.first_name[0] + u.last_name[0]).toUpperCase();
+    document.getElementById('profile-avatar').textContent = initials;
+    renderUserChip();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+async function saveProfile() {
+  const btn = document.getElementById('profile-btn');
+  const payload = {
+    first_name: document.getElementById('first_name').value.trim(),
+    last_name: document.getElementById('last_name').value.trim(),
+    email: document.getElementById('email').value.trim(),
+  };
+  if (!payload.first_name || !payload.last_name || !payload.email) {
+    toast('All fields are required', 'error'); return;
+  }
+  btn.innerHTML = '<span class="spinner"></span>';
+  btn.disabled = true;
+  try {
+    const res = await http.put('/auth/me', payload);
+    if (res.access_token) setToken(res.access_token);
+    setUser(res.user);
+    toast('Profile updated');
+    renderUserChip();
+    const initials = (res.user.first_name[0] + res.user.last_name[0]).toUpperCase();
+    document.getElementById('profile-avatar').textContent = initials;
+  } catch(e) { toast(e.message, 'error'); }
+  finally { btn.innerHTML = 'Save changes'; btn.disabled = false; }
+}
+
+async function savePassword() {
+  const pw = document.getElementById('new-password').value;
+  const confirm = document.getElementById('confirm-password').value;
+  const btn = document.getElementById('pw-btn');
+
+  if (!pw) { toast('Enter a new password', 'error'); return; }
+  if (pw.length < 6) { toast('Password must be at least 6 characters', 'error'); return; }
+  if (pw !== confirm) { toast('Passwords do not match', 'error'); return; }
+
+  btn.innerHTML = '<span class="spinner"></span>';
+  btn.disabled = true;
+
+  const u = getUser();
+  try {
+    await http.put('/auth/me', {
+      first_name: u.first_name,
+      last_name: u.last_name,
+      email: u.email,
+      password: pw,
+    });
+    toast('Password updated');
+    document.getElementById('new-password').value = '';
+    document.getElementById('confirm-password').value = '';
+  } catch(e) { toast(e.message, 'error'); }
+  finally { btn.innerHTML = 'Update password'; btn.disabled = false; }
+}
+
+loadProfile();
+</script>
+</body>
+</html>
